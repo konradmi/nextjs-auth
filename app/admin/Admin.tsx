@@ -1,15 +1,17 @@
 import React from 'react'
 import prisma from '../../lib/prisma'
 
-import styles from './page.module.scss'
+import styles from './Admin.module.scss'
 
-const TestRoute = async () => {
+const Admin = async () => {
   const users = await prisma.users.findMany()
+
   return (
-    <div className={styles.page}>
+    <div className={styles.Admin}>
+      <h1>Protected Admin</h1>
       {JSON.stringify(users)}
     </div>
   )
 }
 
-export default TestRoute
+export default Admin

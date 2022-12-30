@@ -1,0 +1,14 @@
+.LoginPage {
+  padding-top: 10rem;
+  width: 30rem;
+  margin: auto;
+  text-align: center;
+
+  &__header {
+    margin-bottom: 2rem;
+  }
+
+  &__button {
+    margin-top: 2rem;
+  }
+}
