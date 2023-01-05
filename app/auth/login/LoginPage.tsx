@@ -11,14 +11,13 @@ const LoginPage = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
-    console.log('submit')
-    const result = await signIn('credentials', {
+
+    await signIn('credentials', {
       username: username.current,
       password: password.current,
       redirect: true,
       callbackUrl: '/',
     })
-    console.log('result', result)
   }
 
   return (

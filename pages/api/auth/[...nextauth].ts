@@ -6,7 +6,6 @@ export const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       async authorize(credentials, req) {
-        console.log('authorize')
         const { username, password } = credentials
 
         if (username === 'konrad' && password === '123') return { username: 'konrad', name: 'Konrad' }
@@ -15,7 +14,7 @@ export const authOptions = {
     })
   ],
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
   },
   pages: {
     signIn: '/auth/login',
