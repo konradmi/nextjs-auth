@@ -3,9 +3,11 @@
 import { SyntheticEvent, useRef, useState } from 'react'
 
 import styles from './RegisterPage.module.scss'
+import useRegistration from './hooks/useRegistration'
 
 const RegisterPage = () => {
   const [error, setError] = useState('')
+  const { register } = useRegistration()
   const username = useRef<string>('')
   const password = useRef<string>('')
   const confirmPassword = useRef<string>('')
@@ -13,21 +15,10 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
-    if (password !== confirmPassword) setError('Password mismatch')
+    const registerStatus = await register(username.current, password.current, confirmPassword.current)
+    console.log('registerStatus', registerStatus.error)
 
-    const body = {
-      username: username.current,
-      password: password.current,
-      confirmPassword: password.current,
-    }
-
-    await fetch('/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    })
+    if (registerStatus.error && !registerStatus.success) setError(registerStatus.error)
   }
 
   return (

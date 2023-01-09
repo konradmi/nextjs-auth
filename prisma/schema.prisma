@@ -8,9 +8,7 @@ datasource db {
 }
 
 model users {
-  id         Int     @id @default(autoincrement())
-  email      String? @db.VarChar(64)
-  first_name String? @db.VarChar(64)
-  last_name  String? @db.VarChar(64)
-  password   String? @db.VarChar(256)
+  id            Int     @id @default(autoincrement())
+  username      String? @db.VarChar(64) @unique
+  password      String? @db.VarChar(256)
 }

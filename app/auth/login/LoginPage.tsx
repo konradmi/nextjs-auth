@@ -1,23 +1,20 @@
 'use client'
 
 import { SyntheticEvent, useRef } from 'react'
-import { signIn } from 'next-auth/react'
+
+import useLogin from './hooks/useLogin'
 
 import styles from './LoginPage.module.scss'
 
 const LoginPage = () => {
   const username = useRef('')
   const password = useRef('')
+  const { login } = useLogin()
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
 
-    await signIn('credentials', {
-      username: username.current,
-      password: password.current,
-      redirect: true,
-      callbackUrl: '/',
-    })
+    await login(username.current, password.current)
   }
 
   return (

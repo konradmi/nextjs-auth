@@ -11,6 +11,7 @@ export const authOptions = {
       },
       async authorize(credentials, _req) {
         if (!credentials) return null
+        console.log('authorize')
 
         const { username, password } = credentials
 
@@ -19,9 +20,6 @@ export const authOptions = {
       }
     })
   ],
-  // session: {
-  //   strategy: 'jwt',  // it's a default strategy, but for some reason Typescript has a problem with that
-  // },
   pages: {
     signIn: '/auth/login',
   }
