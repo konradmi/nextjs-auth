@@ -2,10 +2,10 @@ import { signIn } from 'next-auth/react'
 
 const useLogin = () => {
   const login = async (username: string, password: string) => {
-    await signIn('credentials', {
+    return signIn('credentials', {
       username: username,
       password: password,
-      redirect: true,
+      redirect: false,
       callbackUrl: '/',
     })
   }

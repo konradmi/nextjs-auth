@@ -15,7 +15,8 @@ const Home = () => {
       {
         session?.user ? (
           <div>
-            {session.user.name}
+            {session.user.username}
+            {session.user.id}
             <button onClick={() => signOut()}>Sign out</button>
           </div>
         ) : (

@@ -16,7 +16,6 @@ const RegisterPage = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
     const registerStatus = await register(username.current, password.current, confirmPassword.current)
-    console.log('registerStatus', registerStatus.error)
 
     if (registerStatus.error && !registerStatus.success) setError(registerStatus.error)
   }

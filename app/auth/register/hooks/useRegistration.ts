@@ -29,9 +29,9 @@ const useRegistration = () => {
       await login(username, password)
 
       return { error: null, success: true }
-    } catch (e) {
+    } catch (e: any) {
       return {
-        error: e.message,
+        error: e?.message,
         success: false
       }
     }

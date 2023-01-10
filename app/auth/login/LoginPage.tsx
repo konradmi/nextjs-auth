@@ -1,6 +1,6 @@
 'use client'
 
-import { SyntheticEvent, useRef } from 'react'
+import { SyntheticEvent, useRef, useState } from 'react'
 
 import useLogin from './hooks/useLogin'
 
@@ -9,12 +9,14 @@ import styles from './LoginPage.module.scss'
 const LoginPage = () => {
   const username = useRef('')
   const password = useRef('')
+  const [error, setError] = useState('')
   const { login } = useLogin()
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
 
-    await login(username.current, password.current)
+    const response = await login(username.current, password.current)
+    setError(response?.error || '')
   }
 
   return (
@@ -28,6 +30,9 @@ const LoginPage = () => {
         <label htmlFor='password'>Password</label>
         <input name='password' type='password' onChange={(e) => password.current = e.target.value}/>
       </div>
+      {
+        error && <h4>{error}</h4>
+      }
       <button className={styles.LoginPage__button} type='submit'>Login</button>
     </form>
   )
