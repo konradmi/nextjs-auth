@@ -35,6 +35,4 @@ export default async function handler(
   res.json({
     username: user.username!,
   })
-
-  res.redirect('/admin')
 }

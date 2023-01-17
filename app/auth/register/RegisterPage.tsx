@@ -1,13 +1,16 @@
 'use client'
 
 import { SyntheticEvent, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
+
+import { register } from '../../../utils/auth'
 
 import styles from './RegisterPage.module.scss'
-import useRegistration from './hooks/useRegistration'
 
 const RegisterPage = () => {
   const [error, setError] = useState('')
-  const { register } = useRegistration()
+  const router = useRouter()
+
   const username = useRef<string>('')
   const password = useRef<string>('')
   const confirmPassword = useRef<string>('')
@@ -17,7 +20,8 @@ const RegisterPage = () => {
     e.preventDefault()
     const registerStatus = await register(username.current, password.current, confirmPassword.current)
 
-    if (registerStatus.error && !registerStatus.success) setError(registerStatus.error)
+    if (registerStatus.error && !registerStatus.success) return setError(registerStatus.error)
+    router.push('/')
   }
 
   return (

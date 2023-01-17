@@ -1,8 +1,9 @@
 'use client'
 
 import { SyntheticEvent, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-import useLogin from './hooks/useLogin'
+import { login } from '../../../utils/auth'
 
 import styles from './LoginPage.module.scss'
 
@@ -10,13 +11,14 @@ const LoginPage = () => {
   const username = useRef('')
   const password = useRef('')
   const [error, setError] = useState('')
-  const { login } = useLogin()
+  const router = useRouter()
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
 
     const response = await login(username.current, password.current)
-    setError(response?.error || '')
+    if (response?.error) return setError(response.error || '')
+    router.push('/')
   }
 
   return (

@@ -10,17 +10,21 @@ const Home = () => {
 
   return (
     <div className={styles.Home}>
-      <Link href={'/'}>Home</Link>
-      <Link href={'/admin'}>Admin</Link>
+      <div className={styles.Home__navigation}>
+        <Link href={'/'}>Home</Link>
+        <Link href={'/admin'}>Admin</Link>
+      </div>
       {
         session?.user ? (
-          <div>
-            {session.user.username}
-            {session.user.id}
+          <div className={styles.Home__auth}>
+            {session.user.username}(id: {session.user.id})
             <button onClick={() => signOut()}>Sign out</button>
           </div>
         ) : (
-          <button onClick={() => signIn()}>Sign in</button>
+          <div className={styles.Home__auth}>
+            <Link href={'/auth/register'}>Register</Link>
+            <button onClick={() => signIn()}>Sign in</button>
+          </div>
         )
       }
     </div>
