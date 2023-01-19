@@ -1,11 +1,16 @@
 import { signIn } from 'next-auth/react'
 
 export const login = async (username: string, password: string) => {
-  return signIn('credentials', {
+  const signInResponse = await signIn('credentials', {
     username: username,
     password: password,
     redirect: false,
   })
+
+  return {
+    error: signInResponse?.error || null,
+    callbackUrl: new URL(signInResponse?.url || '').searchParams.get('callbackUrl') || '/'
+  }
 }
 
 export const register = async (username: string, password: string, confirmPassword: string) => {

@@ -17,8 +17,8 @@ const LoginPage = () => {
     e.preventDefault()
 
     const response = await login(username.current, password.current)
-    if (response?.error) return setError(response.error || '')
-    router.push('/')
+    if (response.error) return setError(response.error || '')
+    router.push(response.callbackUrl)
   }
 
   return (
