@@ -14,7 +14,7 @@ const Home = () => {
         title: 'Select a file',
         buttonLabel: 'This one will do',
         properties: ['openFile']
-      }).then(result => alert(result))
+      })
     }
   }
 

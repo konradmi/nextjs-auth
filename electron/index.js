@@ -11,8 +11,9 @@ function createWindow () {
       contextIsolation: true,
     }
   })
-  
+
   win.loadURL('http://localhost:3000')
+  win.webContents.openDevTools()
 }
 app.whenReady().then(createWindow)
 app.on('window-all-closed', () => {
@@ -27,7 +28,8 @@ app.on('activate', () => {
 })
 
 app.whenReady().then(() => {
-  ipcMain.handle('dialog', (event, method, params) => {
-    dialog[method](params)
+  ipcMain.handle('dialog', async (event, method, params) => {
+    const results = await dialog[method](params)
+    console.log(results)
   })
 })
