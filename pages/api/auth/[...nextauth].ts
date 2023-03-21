@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth'
+import NextAuth, { Session } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import prisma from '../../../lib/prisma'
 import bcrypt from 'bcrypt'
@@ -27,7 +27,7 @@ export const authOptions = {
 
         if (!isPasswordValid) throw new Error('Incorrect Password')
 
-        if (isPasswordValid) return { username: user.username, id: user.id.toString() }
+        if (isPasswordValid) return { username: user.username, id: user.id.toString(), features: ['user'] }
 
         return null
       },
@@ -37,15 +37,14 @@ export const authOptions = {
     signIn: '/auth/login',
   },
   callbacks: {
-    async session({ session, token }: { session: any, token: any}) {
-      const user = await prisma.users.findFirst({
-        where: {
-          id: +token.sub
-        }
-      })
-      session.user = {}
-      session.user.username = user?.username
-      session.user.id = user?.id
+    async jwt({ token, user }: any) {
+      if (user) {
+        token.user = user
+      }
+      return token
+    },
+    async session({ session, token }: { session: Session, token: any}) {
+      session.user = token.user
       return session
     }
   }

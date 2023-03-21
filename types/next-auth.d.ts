@@ -8,6 +8,7 @@ declare module "next-auth" {
     user: {
       username: string
       id: number
+      features: string[]
     }
   }
 }

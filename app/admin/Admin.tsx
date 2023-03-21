@@ -1,12 +1,15 @@
 import React from 'react'
+import RequireFeature from '../../components/RequireFeature'
 
 import styles from './Admin.module.scss'
 
 const Admin = async () => {
   return (
-    <div className={styles.Admin}>
-      <h1>Only with Admin Privileges</h1>
-    </div>
+    <RequireFeature features={['admin']}>
+      <div className={styles.Admin}>
+        <h1>Only with the Admin feature</h1>
+      </div>
+    </RequireFeature>
   )
 }
 
