@@ -13,6 +13,7 @@ const Home = () => {
       <div className={styles.Home__navigation}>
         <Link href={'/'}>Home</Link>
         <Link href={'/admin'} prefetch={false}>Admin</Link>
+        <Link href={'/user'} prefetch={false}>User</Link>
       </div>
       {
         session?.user ? (
