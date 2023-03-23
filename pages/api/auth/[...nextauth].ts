@@ -26,7 +26,7 @@ export const authOptions = {
         const isPasswordValid = await bcrypt.compare(password, user.password)
 
         if (!isPasswordValid) throw new Error('Incorrect Password')
-
+        // features can be taken from the db. the user feature is only for demo purposes
         if (isPasswordValid) return { username: user.username, id: user.id.toString(), features: ['user'] }
 
         return null

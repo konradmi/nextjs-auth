@@ -8,9 +8,11 @@ type RequireFeatureProps = {
   children: ReactNode,
 }
 
+// this component can be used when you need more granular control of what's available to users.
+// the route level protection is taken care of in middleware
+
 const RequireFeature = ({ features, children }: RequireFeatureProps) => {
   const { data: session } = useSession()
-  console.log('session', session)
 
   const userFeatures = session?.user.features || []
 
