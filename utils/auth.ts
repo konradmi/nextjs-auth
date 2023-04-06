@@ -9,8 +9,12 @@ export const login = async (username: string, password: string) => {
 
   return {
     error: signInResponse?.error || null,
-    callbackUrl: new URL(signInResponse?.url || '').searchParams.get('callbackUrl') || '/'
+    callbackUrl: !signInResponse?.error && new URL(signInResponse?.url || '').searchParams.get('callbackUrl') || '/'
   }
+}
+
+export const loginMS = async () => {
+  await signIn('azure-ad')
 }
 
 export const register = async (username: string, password: string, confirmPassword: string) => {

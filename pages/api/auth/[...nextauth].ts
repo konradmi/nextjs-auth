@@ -1,10 +1,17 @@
 import NextAuth, { Session } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import prisma from '../../../lib/prisma'
+import AzureADProvider from 'next-auth/providers/azure-ad'
 import bcrypt from 'bcrypt'
+
+import prisma from '../../../lib/prisma'
 
 export const authOptions = {
   providers: [
+    AzureADProvider({
+      clientId: process.env.AZURE_AD_CLIENT_ID!,
+      clientSecret: process.env.AZURE_AD_CLIENT_SECRET!,
+      tenantId: process.env.AZURE_AD_TENANT_ID,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -37,7 +44,20 @@ export const authOptions = {
     signIn: '/auth/login',
   },
   callbacks: {
-    async jwt({ token, user }: any) {
+    async signIn(payload: any) {
+      if (payload.account.provider !== 'azure-ad') return true
+      const username = payload.profile.name
+
+      const user = await prisma.users.findFirst({
+        where: {
+          username
+        }
+      })
+
+      return user ? true : '/auth/login?error=Azure User Does not Exist';
+
+    },
+    async jwt({ token, user, account, profile }: any) {
       if (user) {
         token.user = user
       }

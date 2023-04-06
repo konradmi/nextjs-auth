@@ -1,17 +1,18 @@
 'use client'
 
 import { SyntheticEvent, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
-import { login } from '../../../utils/auth'
+import { login, loginMS } from '../../../utils/auth'
 
 import styles from './LoginPage.module.scss'
 
 const LoginPage = () => {
+  const router = useRouter()
+  const params = useSearchParams()
   const username = useRef('')
   const password = useRef('')
-  const [error, setError] = useState('')
-  const router = useRouter()
+  const [error, setError] = useState(params?.get('error') || '')
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
@@ -36,6 +37,7 @@ const LoginPage = () => {
         error && <h4>{error}</h4>
       }
       <button className={styles.LoginPage__button} type='submit'>Login</button>
+      <button className={styles.LoginPage__button} onClick={loginMS}>Login with MS</button>
     </form>
   )
 }
