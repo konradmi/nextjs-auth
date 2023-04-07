@@ -58,7 +58,15 @@ export const authOptions = {
 
     },
     async jwt({ token, user, account, profile }: any) {
-      if (user) {
+      if (account?.provider === 'azure-ad' && user) {
+        const tokenUser = {
+          id: user.id,
+          username: user.name,
+          features: ['user']
+        }
+        token.user = tokenUser
+      }
+      if (account?.provider === 'credentials' && user) {
         token.user = user
       }
       return token

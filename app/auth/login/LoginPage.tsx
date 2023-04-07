@@ -22,6 +22,11 @@ const LoginPage = () => {
     router.push(response.callbackUrl)
   }
 
+  const handleLoginWithMS = async (e: SyntheticEvent) => {
+    e.preventDefault()
+    await loginMS()
+  }
+
   return (
     <form className={styles.LoginPage} onSubmit={handleSubmit}>
       <h1 className={styles.LoginPage__header}>Login</h1>
@@ -37,7 +42,7 @@ const LoginPage = () => {
         error && <h4>{error}</h4>
       }
       <button className={styles.LoginPage__button} type='submit'>Login</button>
-      <button className={styles.LoginPage__button} onClick={loginMS}>Login with MS</button>
+      <button className={styles.LoginPage__button} onClick={handleLoginWithMS}>Login with MS</button>
     </form>
   )
 }
