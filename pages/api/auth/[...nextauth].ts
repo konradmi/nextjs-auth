@@ -54,11 +54,13 @@ export const authOptions = {
         }
       })
 
-      return user ? true : '/auth/login?error=Azure User Does not Exist';
+      return quser ? true : '/auth/login?error=Azure User Does not Exist';
 
     },
     async jwt({ token, user, account, profile }: any) {
       if (account?.provider === 'azure-ad' && user) {
+        // user is the object returned from azure. Therefor, it's necessary to normalize it so that the user
+        // in the token is the same irrespective of the auth method
         const tokenUser = {
           id: user.id,
           username: user.name,
@@ -67,6 +69,7 @@ export const authOptions = {
         token.user = tokenUser
       }
       if (account?.provider === 'credentials' && user) {
+        // with the credentials provider, user is the object returned from the authorize method
         token.user = user
       }
       return token
