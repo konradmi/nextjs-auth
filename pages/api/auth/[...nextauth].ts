@@ -54,7 +54,7 @@ export const authOptions = {
         }
       })
 
-      return quser ? true : '/auth/login?error=Azure User Does not Exist';
+      return user ? true : '/auth/login?error=Azure User Does not Exist';
 
     },
     async jwt({ token, user, account, profile }: any) {
